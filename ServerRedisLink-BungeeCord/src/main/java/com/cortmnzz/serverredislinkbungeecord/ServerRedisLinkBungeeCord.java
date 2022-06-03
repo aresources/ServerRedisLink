@@ -23,7 +23,7 @@ public final class ServerRedisLinkBungeeCord extends Plugin {
 
     @Override
     public void onEnable() {
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(500));
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 2, 500, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(500));
 
         File configurationFile = new File(getDataFolder(), "config.yml");
         Configuration configuration;
