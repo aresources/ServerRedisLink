@@ -1,3 +1,0 @@
-name: ServerRedisLink BungeeCord
-version: '${project.version}'
-main: com.cortmnzz.serverredislinkbungeecord.ServerRedisLinkBungeeCord

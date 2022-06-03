@@ -13,13 +13,18 @@ import redis.clients.jedis.JedisPubSub;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public final class ServerRedisLinkBungeeCord extends Plugin {
 
-    JedisPool jedisPool;
+    private JedisPool jedisPool;
 
     @Override
     public void onEnable() {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(500));
+
         File configurationFile = new File(getDataFolder(), "config.yml");
         Configuration configuration;
 
@@ -55,7 +60,7 @@ public final class ServerRedisLinkBungeeCord extends Plugin {
             }
         }
         try {
-            getProxy().getScheduler().runAsync(this, () -> jedisPool.getResource().subscribe(new JedisPubSub() {
+            threadPoolExecutor.submit(() -> jedisPool.getResource().subscribe(new JedisPubSub() {
                 @Override
                 public void onMessage(String channel, String message) {
                     if (message.equals("update")) {

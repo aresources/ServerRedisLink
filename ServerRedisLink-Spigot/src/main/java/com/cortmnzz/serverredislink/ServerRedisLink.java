@@ -42,7 +42,8 @@ public final class ServerRedisLink extends JavaPlugin {
 
         try {
             jedisPool.getResource().set(redisKey, String.join(":", arguments));
-            jedisPool.getResource().publish("server-link", "update");
+
+            getServer().getScheduler().runTaskAsynchronously(this, () -> jedisPool.getResource().publish("server-link", "update"));
 
             getLogger().info("Server successfully registered!");
         } catch (Exception exception) {
