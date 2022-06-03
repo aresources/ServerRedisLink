@@ -1,0 +1,5 @@
+name: ServerRedisLink
+version: '${project.version}'
+main: com.cortmnzz.serverredislink.ServerRedisLink
+load: STARTUP
+authors: [ Ailakks ]
